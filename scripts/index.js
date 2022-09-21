@@ -1,38 +1,75 @@
 //Or4HODj5TcB4cbOt00k6UA==53xijEHXB3z7Up8h
 
-let category = 'happiness'
+import * as categories from './categories.js';
+import * as quote from './quote.js';
+import * as favorite from './favorite.js';
 
-async function getQuote() {
-    let data;
-    $.ajax({
-        method: 'GET',
-        url: 'https://api.api-ninjas.com/v1/quotes?category=' + category,
-        headers: { 'X-Api-Key': 'Or4HODj5TcB4cbOt00k6UA==53xijEHXB3z7Up8h'},
-        contentType: 'application/json',
-        success: function(result) {
-            placeContent(result);
-            
-        },
-        error: function ajaxError(jqXHR) {
-            console.error('Error: ', jqXHR.responseText);
-        }
+//adding categories to the DOM tree
+
+let category = '';
+
+const selector = document.querySelector('#category-selector');
+
+const categorySourcePath = '/../resources/categories.txt';
+
+const textArea = document.querySelector('.text');
+const authorArea = document.querySelector('.author');
+const categoryArea = document.querySelector('.category');
+
+const proccessQuote = function(category = '') {
+    quote.getQuote(category)
+    .then((data) => {
+        quote.placeContentIntoElement(textArea, data[0].quote);
+        quote.placeContentIntoElement(authorArea, data[0].author);
+        quote.placeContentIntoElement(categoryArea, data[0].category);
+    })
+    .catch(error => {
+        console.log(error);
+        alert(error);
     });
 }
 
-function placeContent(data) {
-    let quote = data[0].quote;
-    let author = data[0].author;
+window.addEventListener('load', () => {
 
-    let textArea = document.querySelector('.text');
-    let authorArea = document.querySelector('.author');
+    categories.getCategoriesFromSource(categorySourcePath)
+    .then(data => {
+        categories.insertCategories(selector, data);
+    });
 
-    textArea.innerText = 'Quote: ' + quote;
-    authorArea.innerText = 'Author: ' + author;
-}
+    proccessQuote();
 
-getQuote();
+    document.querySelector('#generator').addEventListener('click', () => {
+        category = categories.getCategory(selector);
+        proccessQuote(category);
+    });
 
-document.querySelector('#generator').addEventListener('click', () => {
-    getQuote();
+    let favoriteList = document.querySelector('.quote-container');
+
+    document.querySelector('.favorite-btn').addEventListener('click', () => {
+
+        favoriteList.style.display = 'flex';
+    });
+
+    favorite.addListenersToList(favoriteList);
+
+    document.querySelector('.add-btn').addEventListener('click', () => {
+
+        let list = document.querySelector('.list');
+
+        favorite.saveQouteToList(
+            list,
+            categoryArea.innerText, 
+            authorArea.innerText,
+            textArea.innerText
+        );
+        favorite.chekListContent(list);
+    });
+
 });
+
+
+
+
+
+
 

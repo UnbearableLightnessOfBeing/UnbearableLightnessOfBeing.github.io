@@ -10,14 +10,84 @@
 
 body {
   display: flex;
-  place-items: center;
-  place-content: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
+  background: url("/../images/table-book-coffee.jpg") no-repeat center center/cover;
 }
 
 .container {
+  background-color: #999999;
   display: inline-block;
   min-width: 300px;
+  max-width: 1000px;
   margin-inline: 1rem;
   padding: 0.5rem;
+}
+.container > *:not(:first-child) {
+  margin-top: 2rem;
+}
+
+.quote > *:not(:first-child) {
+  margin-top: 1rem;
+}
+
+.quote-container {
+  display: none;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.favorite-quotes {
+  height: 80vh;
+  width: 90vw;
+  max-width: 1000px;
+  background-color: gray;
+  display: flex;
+  flex-direction: column;
+}
+
+.favorite-header {
+  display: flex;
+  margin: 1rem;
+  justify-content: space-between;
+}
+.favorite-header h1 {
+  align-self: center;
+}
+.favorite-header .close-btn {
+  justify-self: end;
+  font-size: 30px;
+}
+.favorite-header .close-btn:hover {
+  cursor: pointer;
+  color: red;
+}
+
+.list {
+  list-style: none;
+}
+.list .quote-item {
+  padding-inline: 1rem;
+  transition: all 0.5s ease-in-out;
+}
+.list .quote-item .visible {
+  display: flex;
+  justify-content: space-between;
+}
+.list .quote-item .visible:hover {
+  cursor: pointer;
+}
+.list .quote-item .text {
+  height: 0px;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
 }/*# sourceMappingURL=styles.css.map */
