@@ -16,21 +16,114 @@ body {
   height: 100vh;
   background: url("/../images/table-book-coffee.jpg") no-repeat center center/cover;
 }
+body > *:not(:first-child) {
+  margin-top: 1.5rem;
+}
 
 .container {
-  background-color: #999999;
-  display: inline-block;
+  background-color: rgba(187, 167, 166, 0.75);
+  display: flex;
+  flex-direction: column;
+  width: 90%;
   min-width: 300px;
   max-width: 1000px;
   margin-inline: 1rem;
   padding: 0.5rem;
+  transition: all 0.3s ease-in-out;
+  border: 5px solid #033865;
+  border-radius: 15px;
 }
 .container > *:not(:first-child) {
-  margin-top: 2rem;
+  margin-top: 1rem;
+}
+.container h1 {
+  text-align: center;
+  font-weight: 800;
+  color: #033865;
+}
+.container h2 {
+  color: #033865;
+  text-align: center;
+}
+.container .interactive-area {
+  display: flex;
+  justify-content: center;
+  gap: calc(10vw - 1rem);
+}
+.container .interactive-area .div {
+  text-align: center;
+}
+.container .interactive-area .div > *:not(:first-child) {
+  margin-top: 0.5rem;
+}
+.container .interactive-area #category-selector {
+  background-color: #033865;
+  text-align: center;
+  padding: 0.5rem 0rem;
+  color: white;
+  font-size: 18px;
+  border: 2px solid white;
+  border-radius: 10px;
+}
+.container .interactive-area #generator {
+  font-size: 18px;
+  padding: 1rem 1.5rem;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: #033865;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  align-self: flex-end;
+}
+.container .interactive-area #generator:disabled {
+  opacity: 0.5;
+}
+.container .add-btn {
+  font-size: 18px;
+  padding: 1rem 1.5rem;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: #033865;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  align-self: flex-end;
 }
 
+.quote {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid black;
+  padding: 0.5rem;
+  border-radius: 10px;
+  font-size: 20px;
+}
 .quote > *:not(:first-child) {
   margin-top: 1rem;
+}
+.quote strong {
+  color: #033865;
+}
+.quote .text {
+  transition: all 0.3s ease-in-out;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  max-height: 200px;
+  overflow: scroll;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 2px 0;
 }
 
 .quote-container {
@@ -42,18 +135,36 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
+  margin: 0 !important;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.75);
+}
+.quote-container > *:not(:first-child) {
+  margin-top: 1rem;
+}
+.quote-container .clear-list-btn {
+  align-self: flex-end;
+  margin-right: 10vw;
+  color: #e1273d;
+  background-color: black;
+  border: 2px solid white;
+  padding: 1rem;
+  border-radius: 10px;
 }
 
 .favorite-quotes {
   height: 80vh;
   width: 90vw;
+  min-width: 350px;
   max-width: 1000px;
-  background-color: gray;
+  background-color: darkgray;
   display: flex;
   flex-direction: column;
+  border: 5px solid #033865;
+  border-radius: 15px;
+  color: #033865;
+  overflow: scroll;
 }
 
 .favorite-header {
@@ -73,25 +184,40 @@ body {
   color: red;
 }
 
+.favorite-btn {
+  color: white;
+  border: 2px double white;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
 .list {
   list-style: none;
+  margin-bottom: 1rem;
+}
+.list > *:not(:first-child) {
+  margin-top: 1rem;
 }
 .list .quote-item {
   margin-inline: 1rem;
   transition: all 0.5s ease-in-out;
+  border: 1px dotted #033865;
+  padding: 0.5rem;
+  border-radius: 10px;
 }
 .list .quote-item .visible {
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
   position: relative;
+  align-items: center;
 }
 .list .quote-item .visible .clickable {
   width: 100%;
   height: 100%;
-  background: rgba(255, 0, 0, 0.3);
   position: absolute;
   top: 0;
   left: 0;
@@ -101,13 +227,39 @@ body {
   cursor: pointer;
 }
 .list .quote-item .delete {
-  border: 1px solid black;
-  padding: 0.5rem 1rem;
-  background-color: lightcoral;
+  font-size: 18px;
+  padding: 1rem 1.5rem;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: #033865;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  padding: 0.75rem 1rem;
   z-index: 2;
 }
 .list .quote-item .text {
   height: 0px;
   overflow: hidden;
   transition: all 0.5s ease-in-out;
+  font-size: 20px;
+  padding-top: 0.5rem;
+  position: relative;
+}
+.list .quote-item .text::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  top: 5px;
+  background-color: #033865;
+}
+.list .empty-caption {
+  text-align: center;
+  font-style: italic;
 }/*# sourceMappingURL=styles.css.map */

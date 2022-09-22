@@ -20,5 +20,5 @@ export function getQuote(category = '') {
 }
 
 export function placeContentIntoElement(element, content) {
-    element.innerText = content;
+    element.innerHTML = content;
 }

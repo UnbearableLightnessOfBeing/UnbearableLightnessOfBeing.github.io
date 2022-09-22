@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/../styles/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/87391f55ed.js" crossorigin="anonymous"></script>
     <title>Quotes</title>
 </head>
 <body>
     <div class="container dev">
         <h1>Quote generator</h1>
-        <div class="interactiv-area">
+        <h2>Choose category</h2>
+        <div class="interactive-area">
             <select name="category" id="category-selector">
                 <option value="none">none</option>
             </select>
@@ -21,16 +23,16 @@
             <div class="category"></div>
             <div class="text"></div>
             <div class="author"></div>
-            <button class="add-btn" type="button">Add to favorite</button>
         </div>
+        <button class="add-btn" type="button">Add to favorite</button>
     </div>
-    <div class="favorite-btn"><h1>Favorite quotes...</h1></div>
+    <div class="favorite-btn"><h2>My Favorite Quotes...</h2></div>
     <div class="quote-container">
-        <div class="favorite-quotes dev">
+        <div class="favorite-quotes">
             <div class="favorite-header">
                 <div class=""></div>
                 <h1>Favorite qoutes</h1>
-                <div class="close-btn">X</div>
+                <div class="close-btn"><i class="fa-solid fa-xmark"></i></div>
 
             </div>
 
@@ -39,7 +41,7 @@
             </ul>
             
         </div>
-        <h1 class="clear-list-btn">Delete all quotes</h1>
+        <h3 class="clear-list-btn">Delete all quotes</h3>
     </div>
 
     <script type="module" src="/../scripts/index.js"></script>

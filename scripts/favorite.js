@@ -36,7 +36,7 @@ function addListListeners(list) {
         }
 
         //add an event listener to delete a quote from the list
-        if(e.target.matches('.delete')) {
+        if(e.target.matches('.delete-target')) {
             deleteQuote(list, e.target.parentElement.parentElement);
         }
     });
@@ -54,7 +54,13 @@ function toggleContent(text) {
 function deleteQuote(list, targetQuote) {
     
     if(confirm('Do you really want to delete this quote?')) {
-        targetQuote.remove();
+        if(targetQuote.matches('li')) {
+            targetQuote.remove();
+        }else {
+            if(targetQuote.parentElement.matches('li')) {
+                targetQuote.parentElement.remove();
+            }
+        }
         // save data in in the localStorage after deletion
         localStorage.setItem('list', list.innerHTML);
         checkListContent(list);
@@ -90,8 +96,9 @@ export function saveQouteToList(list, category, author, text) {
     let visibleItem2 = document.createElement('h3');
     visibleItem2.innerText = author;
     let deleteButton = document.createElement('div');
-    deleteButton.innerText = 'Delete';
+    deleteButton.innerHTML = '<i class="fa-solid fa-trash delete-target"></i>';
     deleteButton.classList.add('delete');
+    deleteButton.classList.add('delete-target');
 
     visible.appendChild(clickable);
     visible.appendChild(visibleItem1);
@@ -142,7 +149,7 @@ function listIsEmpty(list) {
 export function deleteAllQuotes(list) {
 
     if(list.children.length == 1) {
-        
+
         alert('Your list is already empty!');
 
     }else {

@@ -9,6 +9,7 @@ import * as favorite from './favorite.js';
 let category = '';
 
 const selector = document.querySelector('#category-selector');
+const generator = document.querySelector('#generator');
 
 const categorySourcePath = '/../resources/categories.txt';
 
@@ -17,15 +18,32 @@ const authorArea = document.querySelector('.author');
 const categoryArea = document.querySelector('.category');
 
 const proccessQuote = function(category = '') {
+
+    //disable generate button
+    generator.setAttribute('disabled', 'true');
+
     quote.getQuote(category)
     .then((data) => {
-        quote.placeContentIntoElement(textArea, data[0].quote);
-        quote.placeContentIntoElement(authorArea, data[0].author);
-        quote.placeContentIntoElement(categoryArea, data[0].category);
+        quote.placeContentIntoElement(textArea, '<strong>Quote:</strong> ' + data[0].quote);
+        quote.placeContentIntoElement(authorArea, '<strong>Author:</strong> ' + data[0].author);
+        quote.placeContentIntoElement(categoryArea, '<strong>Category:</strong> ' + (function() {
+            
+            let array = data[0].category.split('');
+            let firstLetter = array.slice(0, 1);
+            firstLetter[0] = firstLetter[0].toUpperCase();
+            array.splice(0, 1);
+
+            return firstLetter.concat(array).join('');
+        })());
+        
+        //enable generate button
+        generator.removeAttribute('disabled');;
     })
     .catch(error => {
         console.log(error);
-        alert(error);
+        alert('API error has occured', error);
+        //enable generate button
+        generator.removeAttribute('disabled');;
     });
 }
 
@@ -39,7 +57,7 @@ window.addEventListener('load', () => {
 
     proccessQuote();
 
-    document.querySelector('#generator').addEventListener('click', () => {
+    generator.addEventListener('click', () => {
         category = categories.getCategory(selector);
         proccessQuote(category);
     });
@@ -72,8 +90,8 @@ window.addEventListener('load', () => {
 
         favorite.saveQouteToList(
             list,
-            categoryArea.innerText, 
-            authorArea.innerText,
+            categoryArea.innerText.split(': ')[1], 
+            authorArea.innerText.split(': ')[1],
             textArea.innerText
         );
         favorite.checkListContent(list);
