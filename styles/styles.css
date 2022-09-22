@@ -65,6 +65,18 @@ body > *:not(:first-child) {
   border: 2px solid white;
   border-radius: 10px;
 }
+.container .interactive-area #category-selector::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 5px;
+}
+.container .interactive-area #category-selector::-webkit-scrollbar-thumb {
+  background-color: #0a5ea5;
+  border-radius: 5px;
+}
+.container .interactive-area #category-selector:hover {
+  cursor: pointer;
+  background-color: #0a5ea5;
+}
 .container .interactive-area #generator {
   font-size: 18px;
   padding: 1rem 1.5rem;
@@ -84,6 +96,10 @@ body > *:not(:first-child) {
 .container .interactive-area #generator:disabled {
   opacity: 0.5;
 }
+.container .interactive-area #generator:hover {
+  cursor: pointer;
+  background-color: #0a5ea5;
+}
 .container .add-btn {
   font-size: 18px;
   padding: 1rem 1.5rem;
@@ -99,6 +115,10 @@ body > *:not(:first-child) {
   color: white;
   font-weight: bold;
   align-self: flex-end;
+}
+.container .add-btn:hover {
+  cursor: pointer;
+  background-color: #0a5ea5;
 }
 
 .quote {
@@ -119,11 +139,19 @@ body > *:not(:first-child) {
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
-  max-height: 200px;
-  overflow: scroll;
+  height: 150px;
+  overflow-y: scroll;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
   padding: 2px 0;
+}
+.quote .text::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 5px;
+}
+.quote .text::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
 }
 
 .quote-container {
@@ -131,14 +159,18 @@ body > *:not(:first-child) {
   color: white;
   position: fixed;
   flex-direction: column;
-  top: 0;
+  top: -100%;
   left: 0;
   width: 100vw;
   height: 100vh;
   margin: 0 !important;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.75);
+  transition: top 0.5s cubic-bezier(0, 0.5, 1, 0.07);
+  -webkit-animation-name: fading;
+          animation-name: fading;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
 }
 .quote-container > *:not(:first-child) {
   margin-top: 1rem;
@@ -151,6 +183,18 @@ body > *:not(:first-child) {
   border: 2px solid white;
   padding: 1rem;
   border-radius: 10px;
+  transition: all 0.3s ease;
+}
+.quote-container .clear-list-btn:hover {
+  cursor: pointer;
+  background-color: #e1273d;
+  border-color: #e1273d;
+  color: white;
+}
+
+.quote-container.shown {
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.75);
 }
 
 .favorite-quotes {
@@ -164,7 +208,18 @@ body > *:not(:first-child) {
   border: 5px solid #033865;
   border-radius: 15px;
   color: #033865;
-  overflow: scroll;
+  overflow-y: scroll;
+}
+
+.favorite-quotes::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 5px;
+}
+
+.favorite-quotes::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgb(3, 56, 101);
+  background-color: rgba(3, 56, 101, 0.5);
+  border-radius: 5px;
 }
 
 .favorite-header {
@@ -189,6 +244,13 @@ body > *:not(:first-child) {
   border: 2px double white;
   padding: 1rem;
   border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.favorite-btn:hover {
+  cursor: pointer;
+  background-color: white;
+  color: #033865;
 }
 
 .list {
@@ -202,7 +264,6 @@ body > *:not(:first-child) {
   margin-inline: 1rem;
   transition: all 0.5s ease-in-out;
   border: 1px dotted #033865;
-  padding: 0.5rem;
   border-radius: 10px;
 }
 .list .quote-item .visible {
@@ -214,14 +275,20 @@ body > *:not(:first-child) {
   height: fit-content;
   position: relative;
   align-items: center;
+  padding: 0.5rem;
 }
 .list .quote-item .visible .clickable {
   width: 100%;
   height: 100%;
+  border-radius: 5px;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1;
+}
+.list .quote-item .visible .clickable:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .list .quote-item .visible:hover {
   cursor: pointer;
@@ -243,23 +310,79 @@ body > *:not(:first-child) {
   padding: 0.75rem 1rem;
   z-index: 2;
 }
+.list .quote-item .delete:hover {
+  cursor: pointer;
+  cursor: pointer;
+  background-color: #0a5ea5;
+}
 .list .quote-item .text {
   height: 0px;
   overflow: hidden;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.25s ease-in-out;
   font-size: 20px;
-  padding-top: 0.5rem;
+  padding-inline: 0.5rem;
   position: relative;
+  overflow-y: scroll;
+  box-sizing: border-box;
+}
+.list .quote-item .text::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 5px;
+}
+.list .quote-item .text::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+.list .quote-item .text.unfolded {
+  height: 100px !important;
 }
 .list .quote-item .text::before {
   content: "";
   position: absolute;
   width: 100%;
   height: 1px;
-  top: 5px;
+  top: 0px;
   background-color: #033865;
 }
 .list .empty-caption {
   text-align: center;
   font-style: italic;
+}
+
+@media (min-width: 800px) {
+  .clear-list-btn {
+    align-self: center !important;
+    margin-right: 0 !important;
+    color: #e1273d;
+    background-color: black;
+    border: 2px solid white;
+    padding: 1rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+  .list .category {
+    min-width: 120px;
+  }
+}
+@-webkit-keyframes fading {
+  0% {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  50% {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+}
+@keyframes fading {
+  0% {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  50% {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.75);
+  }
 }/*# sourceMappingURL=styles.css.map */

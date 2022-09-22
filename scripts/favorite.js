@@ -15,13 +15,19 @@ export function addListenersToList(favoriteList) {
 function addCloseEvenetListener(favoriteList) {
 
     document.querySelector('.close-btn').addEventListener('click', () => {
-        favoriteList.style.display = 'none';
+        setTimeout(() => {
+            favoriteList.style.display = 'none';
+        }, 500);
+        favoriteList.classList.toggle('shown');
 
     });
     
     favoriteList.addEventListener('click', function(e) {
         if(e.target.matches('.quote-container')) {
-            favoriteList.style.display = 'none';
+            favoriteList.classList.toggle('shown');
+            setTimeout(() => {
+                favoriteList.style.display = 'none';
+            }, 500);
         }
     });
 }
@@ -44,11 +50,13 @@ function addListListeners(list) {
 }
 
 function toggleContent(text) {
-    if(text.style.height == 'fit-content') {
-        text.style.height = '0';
-    }else {
-        text.style.height = 'fit-content';
-    }
+    // if(text.style.height == 'fit-content') {
+    //     text.style.height = '0';
+    // }else {
+    //     text.style.height = 'fit-content';
+    // }
+
+    text.classList.toggle('unfolded');
 }
 
 function deleteQuote(list, targetQuote) {
@@ -92,6 +100,7 @@ export function saveQouteToList(list, category, author, text) {
     quoteItem.appendChild(paragraph);
 
     let visibleItem1 = document.createElement('h3');
+    visibleItem1.classList.add('category');
     visibleItem1.innerText = category;
     let visibleItem2 = document.createElement('h3');
     visibleItem2.innerText = author;

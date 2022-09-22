@@ -67,6 +67,10 @@ window.addEventListener('load', () => {
     document.querySelector('.favorite-btn').addEventListener('click', () => {
 
         favoriteList.style.display = 'flex';
+        setTimeout(function() {
+            favoriteList.classList.toggle('shown');
+        }, 50);
+
     });
 
     favorite.addListenersToList(favoriteList);
