@@ -31,6 +31,7 @@ const proccessQuote = function(category = '') {
 
 window.addEventListener('load', () => {
 
+
     categories.getCategoriesFromSource(categorySourcePath)
     .then(data => {
         categories.insertCategories(selector, data);
@@ -51,10 +52,23 @@ window.addEventListener('load', () => {
     });
 
     favorite.addListenersToList(favoriteList);
+    
+    let list = document.querySelector('.list');
+
+    //load data from the localStorage if there's any
+    if(!localStorage.getItem('list') == '') {
+        // console.log(localStorage.getItem('list'));
+        list.innerHTML = localStorage.getItem('list');
+        favorite.checkListContent(list);
+    }
+
+    document.querySelector('.clear-list-btn').addEventListener('click', () => {
+        favorite.deleteAllQuotes(list);
+    });
+
 
     document.querySelector('.add-btn').addEventListener('click', () => {
 
-        let list = document.querySelector('.list');
 
         favorite.saveQouteToList(
             list,
@@ -62,7 +76,7 @@ window.addEventListener('load', () => {
             authorArea.innerText,
             textArea.innerText
         );
-        favorite.chekListContent(list);
+        favorite.checkListContent(list);
     });
 
 });

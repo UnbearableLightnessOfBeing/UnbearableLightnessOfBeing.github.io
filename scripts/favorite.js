@@ -28,17 +28,37 @@ function addCloseEvenetListener(favoriteList) {
 
 function addListListeners(list) {
 
+
+    //add an event listener to unfold and collapse content of a quote
     list.addEventListener('click', function(e) {
-        if(e.target.matches('.visible')) {
-            let text = e.target.nextElementSibling;
-            if(text.style.height == 'fit-content') {
-                text.style.height = '0';
-            }else {
-                text.style.height = 'fit-content';
-            }
+        if(e.target.matches('.clickable')) {
+            toggleContent(e.target.parentElement.nextElementSibling);
+        }
+
+        //add an event listener to delete a quote from the list
+        if(e.target.matches('.delete')) {
+            deleteQuote(list, e.target.parentElement.parentElement);
         }
     });
 
+}
+
+function toggleContent(text) {
+    if(text.style.height == 'fit-content') {
+        text.style.height = '0';
+    }else {
+        text.style.height = 'fit-content';
+    }
+}
+
+function deleteQuote(list, targetQuote) {
+    
+    if(confirm('Do you really want to delete this quote?')) {
+        targetQuote.remove();
+        // save data in in the localStorage after deletion
+        localStorage.setItem('list', list.innerHTML);
+        checkListContent(list);
+    }
 }
 
 export function saveQouteToList(list, category, author, text) {    
@@ -58,6 +78,10 @@ export function saveQouteToList(list, category, author, text) {
     paragraph.classList.add('text');
     paragraph.innerText = text;
 
+    let clickable = document.createElement('div');
+    clickable.classList.add('clickable');
+    
+    
     quoteItem.appendChild(visible);
     quoteItem.appendChild(paragraph);
 
@@ -65,11 +89,19 @@ export function saveQouteToList(list, category, author, text) {
     visibleItem1.innerText = category;
     let visibleItem2 = document.createElement('h3');
     visibleItem2.innerText = author;
+    let deleteButton = document.createElement('div');
+    deleteButton.innerText = 'Delete';
+    deleteButton.classList.add('delete');
 
+    visible.appendChild(clickable);
     visible.appendChild(visibleItem1);
     visible.appendChild(visibleItem2);
+    visible.appendChild(deleteButton);
 
     list.appendChild(quoteItem);
+
+    // store saved quotes in the locasStorage
+    localStorage.setItem('list', list.innerHTML);
 };
 
 function qouteIsInList(list, text) {
@@ -92,7 +124,7 @@ function qouteIsInList(list, text) {
 
 }
 
-export function chekListContent(list) {
+export function checkListContent(list) {
 
     let caption = document.querySelector('.empty-caption');
 
@@ -105,4 +137,25 @@ export function chekListContent(list) {
 
 function listIsEmpty(list) {
     return (list.children.length === 1) ? true : false;
+}
+
+export function deleteAllQuotes(list) {
+
+    if(list.children.length == 1) {
+        
+        alert('Your list is already empty!');
+
+    }else {
+        if(confirm('Do you really want to delete the whole list?')) {
+            // list.innerHTML = '<h1 class="empty-caption">List is empty!</h1>';
+    
+            while(list.children.length > 1) {
+                list.lastElementChild.remove();
+            }
+    
+            checkListContent(list);
+    
+            localStorage.removeItem('list');
+        }
+    }
 }
