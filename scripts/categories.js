@@ -20,6 +20,12 @@ export function getCategory(selector) {
 
 export function insertCategories(selector, categories) {
     
+    categories = JSON.stringify(categories);
+    console.log(categories);
+
+    categories = JSON.parse(categories);
+    console.log(categories);
+
     categories.forEach(category => {
         let option = document.createElement('option');
         option.value = category;
