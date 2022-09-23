@@ -11,7 +11,8 @@ let category = '';
 const selector = document.querySelector('#category-selector');
 const generator = document.querySelector('#generator');
 
-const categorySourcePath = '/../resources/categories.txt';
+// const categorySourcePath = '/../resources/categories.txt';
+const categorySourcePath = '/../resources/ctgrs.txt';
 
 const textArea = document.querySelector('.text');
 const authorArea = document.querySelector('.author');

@@ -6,7 +6,8 @@ export function getCategoriesFromSource(source) {
         fetch(source)
         .then(response => response.text())
         .then(text => {
-            resolve(text.split('\r\n'));
+            // resolve(text.split('\r\n'));
+            resolve(JSON.parse(text));
         })
         .catch(error => reject(error));
     })
