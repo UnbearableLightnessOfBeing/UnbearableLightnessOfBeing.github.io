@@ -9,15 +9,21 @@
 }
 
 body {
+  height: 100vh;
+  background: url("/../images/table-book-coffee.jpg") no-repeat center center/cover;
+}
+body main {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: url("/../images/table-book-coffee.jpg") no-repeat center center/cover;
+  height: 95%;
 }
-body > *:not(:first-child) {
+body main > *:not(:first-child) {
   margin-top: 1.5rem;
+}
+body footer {
+  height: 5%;
 }
 
 .container {
@@ -281,6 +287,18 @@ body > *:not(:first-child) {
   cursor: pointer;
   background-color: white;
   color: #033865;
+}
+
+.info {
+  color: white;
+  text-align: center;
+  letter-spacing: 3px;
+}
+.info a {
+  color: lightblue;
+  text-decoration: none;
+  font-weight: bolder;
+  letter-spacing: normal;
 }
 
 .list {

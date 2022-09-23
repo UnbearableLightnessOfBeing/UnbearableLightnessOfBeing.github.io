@@ -56,13 +56,24 @@ $quote-font-size: 20px;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    @include centered-element();
     height: 100vh;
     background: url('/../images/table-book-coffee.jpg') no-repeat center center/cover;
-    @include flow-down(1.5rem);
+
+    main {
+        display: flex;
+        flex-direction: column;
+        @include centered-element();
+        height: 95%;
+        @include flow-down(1.5rem);
+    }
+
+    footer {
+        height: 5%;
+    }
+
+
 }
+
 
 .container {
     background-color: $background-color;
@@ -312,6 +323,19 @@ body {
     cursor: pointer;
     background-color: white;
     color: $primary-color;
+}
+
+.info {
+    color: white;
+    text-align: center;
+    letter-spacing: 3px;
+
+    a {
+        color: lightblue;
+        text-decoration: none;
+        font-weight: bolder;
+        letter-spacing: normal;
+    }
 }
 
 .list {
