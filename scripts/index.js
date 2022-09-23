@@ -3,6 +3,7 @@
 import * as categories from './categories.js';
 import * as quote from './quote.js';
 import * as favorite from './favorite.js';
+import * as alertNotification from './alert-notification.js';
 
 //adding categories to the DOM tree
 
@@ -11,7 +12,6 @@ let category = '';
 const selector = document.querySelector('#category-selector');
 const generator = document.querySelector('#generator');
 
-// const categorySourcePath = '/../resources/categories.txt';
 const categorySourcePath = '/../resources/ctgrs.txt';
 
 const textArea = document.querySelector('.text');
@@ -39,17 +39,21 @@ const proccessQuote = function(category = '') {
         
         //enable generate button
         generator.removeAttribute('disabled');;
+
+        // reset the notification alert
+        document.querySelector('.success-note').classList.remove('seen');
+        clearTimeout(alertNotification.getCurrentId());
     })
     .catch(error => {
         console.log(error);
         alert('API error has occured', error);
+
         //enable generate button
         generator.removeAttribute('disabled');;
     });
 }
 
 window.addEventListener('load', () => {
-
 
     categories.getCategoriesFromSource(categorySourcePath)
     .then(data => {
@@ -90,8 +94,10 @@ window.addEventListener('load', () => {
     });
 
 
-    document.querySelector('.add-btn').addEventListener('click', () => {
+    document.querySelector('.add-btn').addEventListener('click', function() {
 
+        // disable the button
+        this.setAttribute('disabled', 'true');
 
         favorite.saveQouteToList(
             list,
@@ -100,6 +106,9 @@ window.addEventListener('load', () => {
             textArea.innerText
         );
         favorite.checkListContent(list);
+
+        // enable the button
+        this.removeAttribute('disabled');
     });
 
 });

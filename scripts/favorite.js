@@ -1,3 +1,5 @@
+import * as alertNotification from './alert-notification.js';
+
 
 
 export function addListenersToList(favoriteList) {
@@ -118,6 +120,9 @@ export function saveQouteToList(list, category, author, text) {
 
     // store saved quotes in the locasStorage
     localStorage.setItem('list', list.innerHTML);
+
+    // lunch alert notification
+    alertNotification.launchNotificaiton();
 };
 
 function qouteIsInList(list, text) {

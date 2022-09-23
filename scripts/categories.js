@@ -6,7 +6,6 @@ export function getCategoriesFromSource(source) {
         fetch(source)
         .then(response => response.text())
         .then(text => {
-            // resolve(text.split('\r\n'));
             resolve(JSON.parse(text));
         })
         .catch(error => reject(error));
@@ -20,12 +19,6 @@ export function getCategory(selector) {
 
 
 export function insertCategories(selector, categories) {
-    
-    categories = JSON.stringify(categories);
-    console.log(categories);
-
-    categories = JSON.parse(categories);
-    console.log(categories);
 
     categories.forEach(category => {
         let option = document.createElement('option');

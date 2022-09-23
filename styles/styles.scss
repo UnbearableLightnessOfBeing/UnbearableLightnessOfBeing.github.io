@@ -150,6 +150,36 @@ body {
     .add-btn:hover {
         @include button-hover();
     }
+
+    .add-btn:disabled {
+        opacity: 0.5;
+    }
+
+    .success-note {
+        display: none;
+        opacity: 0;
+        background-color: teal;
+        width: 15rem;
+        position: fixed;
+        top: 3rem;
+        right: 3rem;
+        padding: 1rem 1rem;
+        margin: 0;
+        border-radius: 15px;
+        box-shadow: 0 0 50px rgba(0, 200, 200, 1);
+        user-select: none;
+
+        animation-name: alert;
+        animation-duration: 4s;
+        
+        h2 {
+            color: white;
+        }
+    }
+
+    .success-note.seen {
+        display: flex;
+    }
 }
 
 .quote {
@@ -414,5 +444,22 @@ body {
     }
     100% {
         background-color: rgba(0, 0, 0, 0.75);  
+    }
+}
+
+@keyframes alert {
+    0% {
+        right: -100%;
+        opacity: 1.0;
+    }
+    20% {
+        right: 3rem;
+        opacity: 1.0;
+    }
+    80% {
+        opacity: 1.0;
+    }
+    100% {
+        opacity: 0;
     }
 }
