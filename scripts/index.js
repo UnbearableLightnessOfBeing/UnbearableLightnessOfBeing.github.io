@@ -9,7 +9,7 @@ const selector = document.querySelector('#category-selector');
 const generator = document.querySelector('#generator');
 const addButton = document.querySelector('.add-btn');
 
-const categorySourcePath = './../resources/ctgrs.txt';
+const categorySourcePath = './../categories/ctgrs.txt';
 
 const textArea = document.querySelector('.text');
 const authorArea = document.querySelector('.author');
