@@ -1,27 +1,32 @@
 import * as alertNotification from './alert-notification.js';
 
 
+const caption = document.querySelector('.empty-caption');
+
+// elements to manipulate
+let quoteItem = null;
+let visible = null;
+let paragraph = null;
+let clickable = null;
+let visibleItem1 = null;
+let visibleItem2 = null;
+let deleteButton = null;
+
 
 export function addListenersToList(favoriteList) {
-
     let list = favoriteList.firstElementChild.lastElementChild;
     
-    addCloseEvenetListener(favoriteList);
+    addClosingEvenetListener(favoriteList);
     addListListeners(list);
-
-    //testing
-    // saveQouteToList(list, 'caetsdf', 'Bruce Lee', 'It doesn\'t matter how slowly you go, it matters that you don\'t stop');
-
 }
 
-function addCloseEvenetListener(favoriteList) {
+function addClosingEvenetListener(favoriteList) {
 
     document.querySelector('.close-btn').addEventListener('click', () => {
         setTimeout(() => {
             favoriteList.style.display = 'none';
         }, 500);
         favoriteList.classList.toggle('shown');
-
     });
     
     favoriteList.addEventListener('click', function(e) {
@@ -35,12 +40,10 @@ function addCloseEvenetListener(favoriteList) {
 }
 
 function addListListeners(list) {
-
-
-    //add an event listener to unfold and collapse content of a quote
+    //add an event listener to unfold and collapse the content of a quote
     list.addEventListener('click', function(e) {
         if(e.target.matches('.clickable')) {
-            toggleContent(e.target.parentElement.nextElementSibling);
+            e.target.parentElement.nextElementSibling.classList.toggle('unfolded');
         }
 
         //add an event listener to delete a quote from the list
@@ -48,17 +51,6 @@ function addListListeners(list) {
             deleteQuote(list, e.target.parentElement.parentElement);
         }
     });
-
-}
-
-function toggleContent(text) {
-    // if(text.style.height == 'fit-content') {
-    //     text.style.height = '0';
-    // }else {
-    //     text.style.height = 'fit-content';
-    // }
-
-    text.classList.toggle('unfolded');
 }
 
 function deleteQuote(list, targetQuote) {
@@ -77,6 +69,34 @@ function deleteQuote(list, targetQuote) {
     }
 }
 
+function createMyElement(tag, className = '', text = '', html = '') {
+    let element = document.createElement(tag);
+
+    if(Array.isArray(className)) {
+        className.forEach((name) => {
+            element.classList.add(name);
+        });
+    }else if(className) {
+        element.classList.add(className);
+    }
+
+    if(text) {
+        element.innerText = text;
+    }else if(html) {
+        element.innerHTML = html;
+    }
+    return element;
+}
+
+function appendChildrenToElement(element, ...children) {
+
+    Object.values(arguments)
+        .filter((argument, index) => index !== 0)
+        .forEach(child => {
+        element.appendChild(child);
+    });
+};
+
 export function saveQouteToList(list, category, author, text) {    
 
     if(qouteIsInList(list, text)) {
@@ -84,45 +104,34 @@ export function saveQouteToList(list, category, author, text) {
         return;
     }
 
-    let quoteItem = document.createElement('li');
-    quoteItem.classList.add('quote-item');
-
-    let visible = document.createElement('div');
-    visible.classList.add('visible');
-
-    let paragraph = document.createElement('p');
-    paragraph.classList.add('text');
-    paragraph.innerText = text;
-
-    let clickable = document.createElement('div');
-    clickable.classList.add('clickable');
-    
-    
-    quoteItem.appendChild(visible);
-    quoteItem.appendChild(paragraph);
-
-    let visibleItem1 = document.createElement('h3');
-    visibleItem1.classList.add('category');
-    visibleItem1.innerText = category;
-    let visibleItem2 = document.createElement('h3');
-    visibleItem2.innerText = author;
-    let deleteButton = document.createElement('div');
-    deleteButton.innerHTML = '<i class="fa-solid fa-trash delete-target"></i>';
-    deleteButton.classList.add('delete');
-    deleteButton.classList.add('delete-target');
-
-    visible.appendChild(clickable);
-    visible.appendChild(visibleItem1);
-    visible.appendChild(visibleItem2);
-    visible.appendChild(deleteButton);
-
-    list.appendChild(quoteItem);
+    createQuoteElements(category, author, text);
+        
+    appendEverything(list);
 
     // store saved quotes in the locasStorage
     localStorage.setItem('list', list.innerHTML);
 
     // lunch alert notification
-    alertNotification.launchNotificaiton();
+    alertNotification.launchNotificaiton(4000);
+};
+
+function createQuoteElements(category, author, text) {
+    quoteItem = createMyElement('li', 'quote-item');
+    visible = createMyElement('div', 'visible');
+    paragraph = createMyElement('p', 'text', text);
+    clickable = createMyElement('div', 'clickable');
+    visibleItem1 = createMyElement('h3', 'category', category);
+    visibleItem2 = createMyElement('h3', '', author);
+    deleteButton = createMyElement(
+        'div', ['delete', 'delete-target'],
+        '', '<i class="fa-solid fa-trash delete-target"></i>'
+        );
+}
+
+function appendEverything(list) {
+    appendChildrenToElement(quoteItem, visible, paragraph);
+    appendChildrenToElement(visible, clickable, visibleItem1, visibleItem2, deleteButton);
+    list.appendChild(quoteItem);
 };
 
 function qouteIsInList(list, text) {
@@ -130,24 +139,17 @@ function qouteIsInList(list, text) {
     if(listIsEmpty(list)) {
         return false;
     }
-    
-    let children = list.children;
-    
-    children = Array.from(children);
 
-    for(let item of children) {
+    for(let item of Array.from(list.children)) {
         if(!item.classList.contains('empty-caption') 
         && item.lastElementChild.innerText == text) {
             return true;
         }
     }
     return false;
-
 }
 
 export function checkListContent(list) {
-
-    let caption = document.querySelector('.empty-caption');
 
     if(listIsEmpty(list)) {
         caption.style.display = 'block';
@@ -162,20 +164,14 @@ function listIsEmpty(list) {
 
 export function deleteAllQuotes(list) {
 
-    if(list.children.length == 1) {
-
+    if(list.children.length === 1) {
         alert('Your list is already empty!');
-
     }else {
         if(confirm('Do you really want to delete the whole list?')) {
-            // list.innerHTML = '<h1 class="empty-caption">List is empty!</h1>';
-    
             while(list.children.length > 1) {
                 list.lastElementChild.remove();
             }
-    
             checkListContent(list);
-    
             localStorage.removeItem('list');
         }
     }

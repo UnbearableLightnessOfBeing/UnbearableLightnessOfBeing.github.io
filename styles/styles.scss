@@ -374,6 +374,11 @@ body {
                 background-color: rgba(0, 0, 0, 0.1);;
             }
 
+            .catogory {
+                max-width: 100px;
+                overflow: hidden;
+            }
+
         }
 
         .visible:hover {

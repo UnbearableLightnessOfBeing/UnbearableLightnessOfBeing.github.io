@@ -1,25 +1,19 @@
-
-//adding categories to the DOM tree
+//adding categories as options(<option>) for selector (<select>)
 
 export function getCategoriesFromSource(source) {
     return new Promise((resolve, reject) => {
         fetch(source)
         .then(response => response.text())
-        .then(text => {
-            resolve(JSON.parse(text));
-        })
+        .then(data => resolve(JSON.parse(data)))
         .catch(error => reject(error));
     })
 }
-
 
 export function getCategory(selector) {
     return selector.value;
 };
 
-
 export function insertCategories(selector, categories) {
-
     categories.forEach(category => {
         let option = document.createElement('option');
         option.value = category;
@@ -27,5 +21,3 @@ export function insertCategories(selector, categories) {
         selector.appendChild(option);
     });
 };
-
-// export default {getCategoriesFromSource, getCategory, insertCategories};

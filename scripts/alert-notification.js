@@ -1,13 +1,23 @@
-let currentNotification = null;
+// managing success notification tab
 
-export function launchNotificaiton() {
-    let alertNote = document.querySelector('.success-note');
-    alertNote.classList.add('seen');
-    currentNotification = setTimeout(() => {        
-    }, 4000);
+let currentNotificationId = null;
+const alertNote = document.querySelector('.success-note');
+
+export function launchNotificaiton(notificationDuraton) {
+    showNotification();
+    currentNotificationId = setTimeout(() => {     
+        removeNotification();
+    }, notificationDuraton);
 }
 
+function showNotification() {
+    alertNote.classList.add('seen');
+}
+
+export function removeNotification() {
+    alertNote.classList.remove('seen');   
+}
 
 export function getCurrentId() {
-    return currentNotification;
+    return currentNotificationId;
 };

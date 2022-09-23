@@ -1,5 +1,5 @@
 
-// proccessing a quote
+// fetching a quote
 
 export function getQuote(category = '') {
     return new Promise((resolve, reject) => {

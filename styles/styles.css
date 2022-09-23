@@ -338,6 +338,10 @@ body footer {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.1);
 }
+.list .quote-item .visible .catogory {
+  max-width: 100px;
+  overflow: hidden;
+}
 .list .quote-item .visible:hover {
   cursor: pointer;
 }
