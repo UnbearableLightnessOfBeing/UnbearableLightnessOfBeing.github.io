@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Concert+One&family=Roboto+Mono&family=Roboto:wght@300;500&display=swap');
+
 //------------------------------
 // variables
 //------------------------------
@@ -33,7 +35,7 @@ $quote-font-size: 20px;
     border: none;
     border-radius: 10px;
     color: white;
-    font-weight: bold;
+    font-family: 'Acme', sans-serif;
 }
 
 @mixin button-hover() {
@@ -69,6 +71,7 @@ body {
 
     footer {
         height: 5%;
+        font-family: 'Concert One', cursive;
     }
 
 
@@ -89,6 +92,7 @@ body {
     transition: all 0.3s ease-in-out;
     border: 5px solid $primary-color;
     border-radius: 15px;
+    font-family: 'Concert One', cursive;
     
     h1 {
         text-align: center;
@@ -121,6 +125,7 @@ body {
             font-size: $font-size;
             border: 2px solid white;
             border-radius: 10px;
+            font-family: 'Acme', sans-serif;
         }
 
         #category-selector::-webkit-scrollbar {
@@ -200,9 +205,12 @@ body {
     padding: 0.5rem;
     border-radius: 10px;
     font-size: $quote-font-size;
+    font-family: 'Roboto Mono', monospace;
 
-    strong {
+    span {
         color: $primary-color;
+        font-family: 'Roboto Mono', monospace;
+        font-weight: 700;
     }
 
 
@@ -251,6 +259,7 @@ body {
         padding: 1rem;
         border-radius: 10px;
         transition: all 0.3s ease;
+        font-family: 'Acme', sans-serif;
     }
 
     .clear-list-btn:hover {
@@ -295,6 +304,7 @@ body {
     display: flex;
     margin: 1rem;
     justify-content: space-between;
+    font-family: 'Concert One', cursive;
 
     h1 {
         align-self: center;
@@ -317,6 +327,7 @@ body {
     padding: 1rem;
     border-radius: 10px;
     transition: all 0.3s ease;
+    font-family: 'Acme', sans-serif;
 }
 
 .favorite-btn:hover {
@@ -349,6 +360,8 @@ body {
         border: 1px dotted $primary-color;
         // padding: 0.5rem;
         border-radius: 10px;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 500;
 
         .visible {
             display: flex;
@@ -434,6 +447,7 @@ body {
     .empty-caption {
         text-align: center;
         font-style: italic;
+        font-family: 'Concert One', cursive;
     }
 
     
@@ -478,10 +492,18 @@ body {
 
 @keyframes alert {
     0% {
-        right: -100%;
+        right: -80%;
         opacity: 1.0;
     }
-    20% {
+    8% {
+        right: 5rem;
+        opacity: 1.0;   
+    }
+    12% {
+        right: 2rem;
+        opacity: 1.0;   
+    }
+    15% {
         right: 3rem;
         opacity: 1.0;
     }

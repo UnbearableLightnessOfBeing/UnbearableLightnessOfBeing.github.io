@@ -1,8 +1,5 @@
 import * as alertNotification from './alert-notification.js';
 
-
-const caption = document.querySelector('.empty-caption');
-
 // elements to manipulate
 let quoteItem = null;
 let visible = null;
@@ -11,7 +8,6 @@ let clickable = null;
 let visibleItem1 = null;
 let visibleItem2 = null;
 let deleteButton = null;
-
 
 export function addListenersToList(favoriteList) {
     let list = favoriteList.firstElementChild.lastElementChild;
@@ -56,13 +52,9 @@ function addListListeners(list) {
 function deleteQuote(list, targetQuote) {
     
     if(confirm('Do you really want to delete this quote?')) {
-        if(targetQuote.matches('li')) {
-            targetQuote.remove();
-        }else {
-            if(targetQuote.parentElement.matches('li')) {
-                targetQuote.parentElement.remove();
-            }
-        }
+        
+        targetQuote.closest('.quote-item').remove();
+
         // save data in in the localStorage after deletion
         localStorage.setItem('list', list.innerHTML);
         checkListContent(list);
@@ -151,6 +143,8 @@ function qouteIsInList(list, text) {
 
 export function checkListContent(list) {
 
+    let caption = document.querySelector('.empty-caption');
+
     if(listIsEmpty(list)) {
         caption.style.display = 'block';
     }else {
@@ -159,7 +153,7 @@ export function checkListContent(list) {
 }
 
 function listIsEmpty(list) {
-    return (list.children.length === 1) ? true : false;
+    return (list.children.length == 1) ? true : false;
 }
 
 export function deleteAllQuotes(list) {
